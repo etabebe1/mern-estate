@@ -9,7 +9,7 @@ export default function Header() {
       <section className="flex justify-between items-center max-w-5xl mx-auto px-2 sm:px-6 md:px-7 py-4">
         <Link to={"/"}>
           <h1 className="flex items-center gap-1 cursor-pointer text-base md:text-xl">
-            <span className="text-amber-900">Vers</span>
+            <span className="text-amber-900">Verse</span>
             <span className="text-slate-400">Estate</span>
           </h1>
         </Link>

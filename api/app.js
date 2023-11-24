@@ -7,8 +7,8 @@ const helmet = require("helmet");
 const morgan = require("morgan");
 
 //*:::::: importing routers from router ::::::*//
-const user = require("./routers/user.routes");
-const sign_up = require("./routers/auth.routes");
+const userRouter = require("./routers/user.routes");
+const authRouter = require("./routers/auth.routes");
 
 //*:::::: making donEnv ready to use ::::::*//
 dotenv.config();
@@ -18,13 +18,13 @@ const connectDB = require("./database/connectDB");
 
 //*::::: middleware ::::::*//
 app.use(cors());
-app.use(express.json());
+app.use(express.json()); //NOTE: allow a json() obj to be an input to the server
 app.use(helmet());
 app.use(morgan("common")); // used to indicate request and related info
 
 //*::::: server routes :::::*//
-app.use("/api/user/", user);
-app.use("/api/authentication/", sign_up);
+app.use("/api/user/", userRouter);
+app.use("/api/authentication/", authRouter);
 
 //*::::: port and URI connection :::::*//
 const port = process.env.PORT || 5000;

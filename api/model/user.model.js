@@ -1,24 +1,24 @@
-import mongoose from "mongoose";
-const bcrypt = require("bcrypt")
+const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
 
 const userSchema = new mongoose.Schema(
   {
     username: {
       type: String,
-      require: true,
+      require: [true, "Pease Provide your username"],
       unique: true,
     },
     email: {
       type: String,
-      require: true,
+      require: [true, "Pease Provide your email"],
       unique: true,
     },
     password: {
       type: String,
-      require: true,
+      require: [true, "Please provide your password!"],
     },
   },
-  { timeStamp: true }
+  { timestamps: true }
 );
 
 //*:::::: used by the register route to encrypt password automatically ::::::*//
