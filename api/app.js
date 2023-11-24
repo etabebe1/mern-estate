@@ -7,7 +7,8 @@ const helmet = require("helmet");
 const morgan = require("morgan");
 
 //*:::::: importing routers from router ::::::*//
-const test = require("./routers/user.routes")
+const user = require("./routers/user.routes");
+const sign_up = require("./routers/auth.routes");
 
 //*:::::: making donEnv ready to use ::::::*//
 dotenv.config();
@@ -22,7 +23,8 @@ app.use(helmet());
 app.use(morgan("common")); // used to indicate request and related info
 
 //*::::: server routes :::::*//
-app.use("/api/user/test", test);
+app.use("/api/user/", user);
+app.use("/api/authentication/", sign_up);
 
 //*::::: port and URI connection :::::*//
 const port = process.env.PORT || 5000;

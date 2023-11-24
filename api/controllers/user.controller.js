@@ -1,6 +1,6 @@
-const test = (req, res) => {
+const user = (req, res) => {
   console.log("router works properly");
-  res.send("test");
+  res.send("user route testing");
 };
 
-module.exports = { test };
+module.exports = { user };
