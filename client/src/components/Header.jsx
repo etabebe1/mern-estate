@@ -23,7 +23,7 @@ export default function Header() {
             <SearchIcon className="text-zinc-900 cursor-pointer font-light " />
           </div>
         </form>
-        <ul className="text-slate-300 flex gap-4 text-sm md:text-base">
+        <ul className="text-slate-300 flex justify-center items-end gap-4 text-sm md:text-base">
           <li className="hidden sm:inline hover:underline">
             <Link to={"/"}>
               <Home />

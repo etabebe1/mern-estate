@@ -1,7 +1,7 @@
 {
   "name": "vers-estate",
   "version": "1.0.0",
-  "description": "This is a MERN server side that initializes server side and connects to the MongoDB",
+  "description": "This is a file that initializes server side and connects to the MongoDB and does all the server side functionalities.",
   "main": "app.js",
   "scripts": {
     "dev": "nodemon api/app.js",
