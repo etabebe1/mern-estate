@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 export default function Header() {
   return (
     <header className="bg-zinc-900 shadow-lg shadow-slate-300">
-      <section className="flex justify-between items-center max-w-5xl mx-auto px-2 py-4">
+      <section className="flex justify-between items-center max-w-5xl mx-auto px-2 sm:px-6 md:px-7 py-4">
         <Link to={"/"}>
           <h1 className="flex items-center gap-1 cursor-pointer text-base md:text-xl">
             <span className="text-amber-900">Vers</span>
