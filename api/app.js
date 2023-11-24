@@ -6,6 +6,9 @@ const dotenv = require("dotenv");
 const helmet = require("helmet");
 const morgan = require("morgan");
 
+//*:::::: importing routers from router ::::::*//
+const test = require("./routers/user.routes")
+
 //*:::::: making donEnv ready to use ::::::*//
 dotenv.config();
 
@@ -18,9 +21,12 @@ app.use(express.json());
 app.use(helmet());
 app.use(morgan("common")); // used to indicate request and related info
 
-//*::::: port and URI connection *::::://
+//*::::: server routes :::::*//
+app.use("/api/user/test", test);
+
+//*::::: port and URI connection :::::*//
 const port = process.env.PORT || 5000;
-const URI = process.env.MONGO_URI; 
+const URI = process.env.MONGO_URI;
 
 //*:::::: Initializing server ::::::*//
 const start = async () => {
