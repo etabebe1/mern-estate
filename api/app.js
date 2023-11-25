@@ -30,6 +30,22 @@ app.use(express.json()); //NOTE: allow a json() obj to be an input to the server
 app.use(helmet());
 app.use(morgan("common")); // used to indicate request and related info
 
+//*::::: server routes :::::*//
+app.use("/api/user/", userRouter);
+app.use("/api/authentication/", authRouter);
+
+//*::::: error handler middleware :::::*//
+app.use((err, req, res, next) => {
+  const statusCode = err.statusCode || 500;
+  const message = err.message || "Internal Server Error";
+  return res.status(statusCode).json({
+    success: false,
+    statusCode,
+    message,
+  });
+});
+
+
 //*::::: port and URI connection :::::*//
 const port = process.env.PORT || 5000;
 const URI = process.env.MONGO_URI;
@@ -45,17 +61,3 @@ const start = async () => {
 };
 start();
 
-//*::::: server routes :::::*//
-app.use("/api/user/", userRouter);
-app.use("/api/authentication/", authRouter);
-
-//*::::: error handler middleware :::::*//
-app.use((err, req, res, next) => {
-  const statusCode = err.statusCode || 500;
-  const message = err.message || "Internal Server Error";
-  return res.status(statusCode).json({
-    success: false,
-    statusCode,
-    message,
-  });
-});

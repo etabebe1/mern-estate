@@ -1,15 +1,19 @@
 import React, { useState, useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import RemoveRedEye from "@mui/icons-material/RemoveRedEye";
 import VisibilityOffSharp from "@mui/icons-material/VisibilityOffSharp";
+import CircularProgress from "@mui/material/CircularProgress";
 import axios from "axios";
 
 export default function SignUp() {
   const [formData, setFormData] = useState({});
+  const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const inputPassword = useRef();
   const inputConfirmPassword = useRef();
+  const navigate = useNavigate();
 
   const handleChange = (evt) => {
     evt.preventDefault();
@@ -19,17 +23,26 @@ export default function SignUp() {
   const handleSubmit = async (evt) => {
     evt.preventDefault();
     if (inputPassword.current.value === inputConfirmPassword.current.value) {
+      setIsLoading(true);
+
       try {
         const response = await axios.post(
           "http://localhost:8800/api/authentication/sign-up",
           formData
         );
-        console.log(response.data);
-      } catch (error) {
-        console.log(error);
+        const { data } = response;
+        // console.log(data);
+        setIsLoading(false);
+        navigate("/sign-in");
+      } catch (err) {
+        const { data } = await err.response;
+        if (data.success === false) {
+          setError(data.message);
+        }
+        setIsLoading(false);
       }
     } else {
-      console.log("password not similar");
+      setError("Confirm password doesn't match Password");
     }
   };
 
@@ -46,6 +59,8 @@ export default function SignUp() {
           id="username"
           onChange={handleChange}
           required
+          minLength="3"
+          // min="true"
         />
         <input
           type="email"
@@ -67,6 +82,7 @@ export default function SignUp() {
             ref={inputPassword}
             onChange={handleChange}
             required
+            minLength="6"
           />
           <span onClick={() => setShowPassword(!showPassword)}>
             {showPassword ? (
@@ -89,6 +105,7 @@ export default function SignUp() {
             ref={inputConfirmPassword}
             onChange={handleChange}
             required
+            minLength="6"
           />
           <span onClick={() => setShowConfirmPassword(!showConfirmPassword)}>
             {showConfirmPassword ? (
@@ -101,16 +118,18 @@ export default function SignUp() {
         <button
           type="submit"
           className="bg-amber-900 py-2 px-2 rounded-lg uppercase text-slate-300 hover:opacity-90"
+          disabled={isLoading}
         >
-          Sign Up
+          {isLoading ? <CircularProgress size={"20px"} /> : "Sign Up"}
         </button>
       </form>
       <div className="flex gap-1 mt-5">
         <p className="text-slate-300">Have an account?</p>
         <Link to={"/sign-in"}>
-          <span className="text-amber-900">Sign In</span>
+          <span className="text-amber-900">Sign Up</span>
         </Link>
       </div>
+      <p className="text-red-600">{error && error}</p>
     </div>
   );
 }
