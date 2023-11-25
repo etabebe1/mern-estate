@@ -3,10 +3,12 @@ const User = require("../model/user.model");
 //*:::::: user sign-up route ::::::*//
 const sign_up = async (req, res, next) => {
   const { username, email, password } = req.body;
+
   const newUser = await User({ username, email, password });
+
   try {
-    await newUser.save();
-    res.status(201).json("User created successfully!");
+    const user = await newUser.save();
+    res.status(201).json(user);
   } catch (error) {
     next(error);
   }

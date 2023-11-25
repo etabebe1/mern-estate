@@ -1,7 +1,8 @@
 const express = require("express");
 const app = express();
-const cors = require("cors");
 
+const { createProxyMiddleware } = require("http-proxy-middleware");
+const cors = require("cors");
 const dotenv = require("dotenv");
 const helmet = require("helmet");
 const morgan = require("morgan");
@@ -17,6 +18,13 @@ dotenv.config();
 const connectDB = require("./database/connectDB");
 
 //*::::: middleware ::::::*//
+//* FIXME: fix proxy setup middleware 
+// const apiProxy = createProxyMiddleware("/api", {
+//   target: "http://localhost:8800",
+//   changeOrigin: true,
+// });
+// app.use("/api", apiProxy);
+
 app.use(cors());
 app.use(express.json()); //NOTE: allow a json() obj to be an input to the server
 app.use(helmet());
