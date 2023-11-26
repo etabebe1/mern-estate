@@ -26,11 +26,11 @@ export default function SignUp() {
       setIsLoading(true);
 
       try {
-        const response = await axios.post(
+        await axios.post(
           "http://localhost:8800/api/authentication/sign-up",
           formData
         );
-        const { data } = response;
+        // const { data } = response;
         // console.log(data);
         setIsLoading(false);
         navigate("/sign-in");

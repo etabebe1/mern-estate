@@ -28,9 +28,9 @@ userSchema.pre("save", async function () {
 });
 
 //*:::::: used by the login route to compare password after password is provided ::::::*//
-// userSchema.methods.comparePassword = async function (candidatePassword) {
-//     const matchTrue = await bcrypt.compare(candidatePassword, this.password);
-//     return matchTrue;
-//   };
+userSchema.methods.comparePassword = async function (candidatePassword) {
+    const matchTrue = await bcrypt.compare(candidatePassword, this.password);
+    return matchTrue;
+  };
 
 module.exports = mongoose.model("user", userSchema);
