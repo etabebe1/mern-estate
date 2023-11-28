@@ -20,25 +20,23 @@ const sign_in = async (req, res, next) => {
   const { email, password } = req.body;
 
   try {
-    // TODO: credential require warning to be implemented to the client side
-    // TODO: since we are not validating here
-
     const validUser = await User.findOne({ email });
-    !validUser && next(errorHandler(404, "User not found!"));
+    if (!validUser) return next(errorHandler(404, "User not found!"));
 
     const passwordMatch = await validUser.comparePassword(password);
-    !passwordMatch && next(errorHandler(401, "Wrong credentials"));
+    if (!passwordMatch) return next(errorHandler(401, "Wrong credentials"));
+
     const { password: userPassword, ...rest } = validUser._doc;
 
     const token = jwt.sign({ id: validUser._id }, process.env.JWT_SECRET, {
-      expiresIn: "30d",
+      expiresIn: process.env.JWT_EXPIRES_IN,
     });
-    res
-      .cookie("access_token", token, {
-        httpOnly: true,
-      })
-      .status(200)
-      .json(rest);
+
+    res.status(200).json({
+      success: true,
+      token: { access_token: "access_token", token, httpOnly: true },
+      user: rest,
+    });
   } catch (error) {
     next(error);
   }

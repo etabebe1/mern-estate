@@ -120,13 +120,13 @@ export default function SignUp() {
           className="bg-amber-900 py-2 px-2 rounded-lg uppercase text-slate-300 hover:opacity-90"
           disabled={isLoading}
         >
-          {isLoading ? <CircularProgress size={"20px"} /> : "Sign Up"}
+          {isLoading ? <CircularProgress size={"20px"} /> : "Sign In"}
         </button>
       </form>
       <div className="flex gap-1 mt-5">
         <p className="text-slate-300">Have an account?</p>
         <Link to={"/sign-in"}>
-          <span className="text-amber-900">Sign Up</span>
+          <span className="text-amber-900">Sign In</span>
         </Link>
       </div>
       <p className="text-red-600">{error && error}</p>

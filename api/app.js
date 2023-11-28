@@ -1,11 +1,12 @@
 const express = require("express");
 const app = express();
 
-const { createProxyMiddleware } = require("http-proxy-middleware");
+// const { createProxyMiddleware } = require("http-proxy-middleware");
 const cors = require("cors");
 const dotenv = require("dotenv");
 const helmet = require("helmet");
 const morgan = require("morgan");
+const cookieParser = require("cookie-parser");
 
 //*:::::: importing routers from router ::::::*//
 const userRouter = require("./routers/user.routes");
@@ -18,7 +19,7 @@ dotenv.config();
 const connectDB = require("./database/connectDB");
 
 //*::::: middleware ::::::*//
-//* FIXME: fix proxy setup middleware 
+//* FIXME: fix proxy setup middleware
 // const apiProxy = createProxyMiddleware("/api", {
 //   target: "http://localhost:8800",
 //   changeOrigin: true,
@@ -29,6 +30,7 @@ app.use(cors());
 app.use(express.json()); //NOTE: allow a json() obj to be an input to the server
 app.use(helmet());
 app.use(morgan("common")); // used to indicate request and related info
+app.use(cookieParser());
 
 //*::::: server routes :::::*//
 app.use("/api/user/", userRouter);
@@ -45,7 +47,6 @@ app.use((err, req, res, next) => {
   });
 });
 
-
 //*::::: port and URI connection :::::*//
 const port = process.env.PORT || 5000;
 const URI = process.env.MONGO_URI;
@@ -60,4 +61,3 @@ const start = async () => {
   }
 };
 start();
-
